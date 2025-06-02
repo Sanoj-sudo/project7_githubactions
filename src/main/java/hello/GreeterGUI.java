@@ -6,36 +6,61 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GreeterGUI {
-
     public static void main(String[] args) {
         // Create the frame
         JFrame frame = new JFrame("Greeter");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 200);
+        frame.setSize(450, 250);
+        frame.setLayout(new GridLayout(4, 1));
 
-        // Create components
-        JLabel label = new JLabel("Click the button to get greeted:", SwingConstants.CENTER);
-        JButton button = new JButton("Say Hello");
+        // Create a panel for colorful background
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(135, 206, 250)); // Light Sky Blue
+        panel.setLayout(new GridLayout(4, 1));
 
-        // Create a text field for output
+        // Label
+        JLabel label = new JLabel("Enter your first name:", SwingConstants.CENTER);
+        label.setFont(new Font("Arial", Font.BOLD, 16));
+        label.setForeground(Color.BLUE);
+
+        // Text field for input
+        JTextField nameField = new JTextField();
+        nameField.setHorizontalAlignment(JTextField.CENTER);
+        nameField.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        // Button to submit name
+        JButton button = new JButton("Submit");
+        button.setBackground(new Color(60, 179, 113)); // Medium Sea Green
+        button.setForeground(Color.WHITE);
+        button.setFont(new Font("Arial", Font.BOLD, 14));
+
+        // Output field
         JTextField textField = new JTextField();
         textField.setEditable(false);
         textField.setHorizontalAlignment(JTextField.CENTER);
+        textField.setFont(new Font("Arial", Font.BOLD, 14));
+        textField.setForeground(Color.MAGENTA);
 
-        // Add action to button
+        // Button Action
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                textField.setText("Hello Somya, how may I help you?");
+                String name = nameField.getText().trim();
+                if (!name.isEmpty()) {
+                    textField.setText("Hello " + name + ", how may I help you?");
+                } else {
+                    textField.setText("Please enter your name first.");
+                }
             }
         });
 
-        // Layout setup
-        frame.setLayout(new GridLayout(3, 1));
-        frame.add(label);
-        frame.add(button);
-        frame.add(textField);
+        // Add components to panel
+        panel.add(label);
+        panel.add(nameField);
+        panel.add(button);
+        panel.add(textField);
 
-        // Display the frame
+        // Add panel to frame
+        frame.add(panel);
         frame.setVisible(true);
     }
 }
