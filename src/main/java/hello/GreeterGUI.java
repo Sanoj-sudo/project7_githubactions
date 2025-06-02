@@ -25,8 +25,7 @@ public class GreeterGUI {
         // Add action to button
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Greeter greeter = new Greeter();
-                textField.setText(greeter.sayHello() + " Somya, how may I help you?");
+                textField.setText("Hello Somya, how may I help you?");
             }
         });
 
