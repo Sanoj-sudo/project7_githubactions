@@ -10,54 +10,68 @@ public class GreeterGUI {
         // Create the frame
         JFrame frame = new JFrame("Greeter");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(450, 250);
-        frame.setLayout(new GridLayout(4, 1));
+        frame.setSize(500, 400);
+        frame.setLayout(new GridBagLayout());
 
-        // Create a panel for colorful background
-        JPanel panel = new JPanel();
-        panel.setBackground(new Color(135, 206, 250)); // Light Sky Blue
-        panel.setLayout(new GridLayout(4, 1));
+        // Create main panel with black background
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(Color.BLACK);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(15, 15, 15, 15);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Label
-        JLabel label = new JLabel("Enter your first name:", SwingConstants.CENTER);
-        label.setFont(new Font("Arial", Font.BOLD, 16));
-        label.setForeground(Color.BLUE);
+        // Label with pink background and white bold font
+        JLabel label = new JLabel("Enter your Name", SwingConstants.CENTER);
+        label.setOpaque(true);
+        label.setBackground(Color.PINK);
+        label.setForeground(Color.WHITE);
+        label.setFont(new Font("Arial", Font.BOLD, 24));
+        label.setBorder(BorderFactory.createLineBorder(Color.PINK, 10));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(label, gbc);
 
-        // Text field for input
+        // Input field
         JTextField nameField = new JTextField();
+        nameField.setFont(new Font("Arial", Font.BOLD, 20));
         nameField.setHorizontalAlignment(JTextField.CENTER);
-        nameField.setFont(new Font("Arial", Font.PLAIN, 14));
+        nameField.setBorder(BorderFactory.createLineBorder(Color.WHITE, 10, true));
+        gbc.gridy = 1;
+        panel.add(nameField, gbc);
 
-        // Button to submit name (updated color to blue)
+        // Submit Button
         JButton button = new JButton("Submit");
-        button.setBackground(new Color(30, 144, 255)); // Dodger Blue
+        button.setFont(new Font("Arial", Font.BOLD, 22));
+        button.setBackground(Color.PINK);
         button.setForeground(Color.WHITE);
-        button.setFont(new Font("Arial", Font.BOLD, 14));
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createLineBorder(Color.PINK, 10, true));
+        button.setOpaque(true);
+        gbc.gridy = 2;
+        panel.add(button, gbc);
 
-        // Output field
-        JTextField textField = new JTextField();
-        textField.setEditable(false);
-        textField.setHorizontalAlignment(JTextField.CENTER);
-        textField.setFont(new Font("Arial", Font.BOLD, 14));
-        textField.setForeground(Color.MAGENTA);
+        // Output Field
+        JTextField outputField = new JTextField();
+        outputField.setEditable(false);
+        outputField.setHorizontalAlignment(JTextField.CENTER);
+        outputField.setFont(new Font("Arial", Font.BOLD, 22));
+        outputField.setBackground(new Color(0, 191, 255)); // DeepSkyBlue
+        outputField.setForeground(Color.WHITE);
+        outputField.setBorder(BorderFactory.createLineBorder(new Color(0, 191, 255), 10, true));
+        gbc.gridy = 3;
+        panel.add(outputField, gbc);
 
-        // Button Action
+        // Action listener
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String name = nameField.getText().trim();
                 if (!name.isEmpty()) {
-                    textField.setText("Hello " + name + ", how may I help you?");
+                    outputField.setText("Hello  " + name + " How may I help You");
                 } else {
-                    textField.setText("Please enter your name first.");
+                    outputField.setText("Please enter your name first.");
                 }
             }
         });
-
-        // Add components to panel
-        panel.add(label);
-        panel.add(nameField);
-        panel.add(button);
-        panel.add(textField);
 
         // Add panel to frame
         frame.add(panel);
