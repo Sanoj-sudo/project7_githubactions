@@ -73,7 +73,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          cp staging/gs-maven-0.1.0-shaded.jar app.jar
+          cp staging/gs-maven-0.1.0.jar app.jar
           docker build -t ${{ vars.ECR_REPOSITORY }}:latest .
 
       - name: Tag Docker image
