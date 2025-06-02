@@ -28,9 +28,9 @@ public class GreeterGUI {
         nameField.setHorizontalAlignment(JTextField.CENTER);
         nameField.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        // Button to submit name
+        // Button to submit name (updated color to blue)
         JButton button = new JButton("Submit");
-        button.setBackground(new Color(60, 179, 113)); // Medium Sea Green
+        button.setBackground(new Color(30, 144, 255)); // Dodger Blue
         button.setForeground(Color.WHITE);
         button.setFont(new Font("Arial", Font.BOLD, 14));
 
