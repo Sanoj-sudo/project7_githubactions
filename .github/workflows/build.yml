@@ -40,7 +40,7 @@ jobs:
       - name: Copy JAR to staging
         run: |
           mkdir staging
-          cp target/gs-maven-0.1.0-shaded.jar staging/
+          cp target/gs-maven-0.1.0.jar staging/
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
