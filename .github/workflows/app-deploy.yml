@@ -76,9 +76,9 @@ jobs:
 
       - name: Restore JAR to expected target location
         run: |
-          mkdir -p target
-          cp staging/target/${{ env.JAR_NAME }} target/
-
+          mkdir -p Application/target
+          cp staging/target/${{ env.JAR_NAME }} Application/target/
+          
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
