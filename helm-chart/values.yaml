@@ -1,0 +1,14 @@
+replicaCount: 2
+
+image:
+  repository: 961341552501.dkr.ecr.us-east-1.amazonaws.com/greet
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 8080
+
+resources: {}
+

@@ -83,3 +83,38 @@ jobs:
       - name: Push Docker image to ECR
         run: |
           docker push ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:latest
+
+  helm_deploy:
+    name: Deploy to EKS using Helm
+    runs-on: ubuntu-latest
+    needs: docker_publish
+    environment:
+      name: prod
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Set up kubeconfig for EKS
+        run: |
+          aws eks update-kubeconfig --name ${{ vars.EKS_CLUSTER_NAME }} --region ${{ vars.AWS_REGION }}
+
+      - name: Install Helm
+        run: |
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+          helm version
+
+      - name: Lint Helm chart
+        run: helm lint ./helm-chart
+
+      - name: Deploy with Helm
+        run: |
+          helm upgrade --install greet ./helm-chart \
+            --namespace default \
+            --set image.repository=${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }} \
+            --set image.tag=latest
