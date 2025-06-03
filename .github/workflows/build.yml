@@ -86,7 +86,7 @@ jobs:
           name: ${{ env.ARTIFACT_NAME }}
           path: staging
 
-  docker_publish:
+  ecr_publish:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
     needs: publish_job
@@ -125,7 +125,7 @@ jobs:
   helm_deploy:
     name: Deploy to EKS using Helm
     runs-on: ubuntu-latest
-    needs: docker_publish
+    needs: ecr_publish
     environment: prod
     env:
       IMAGE_TAG: "1.0.0"
