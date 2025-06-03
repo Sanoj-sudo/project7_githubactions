@@ -1,11 +1,11 @@
-# .github/workflows/infra-provision.yml
 name: Infrastructure Provisioning (Terraform)
 
 on:
   workflow_dispatch:
   push:
+    branches: [ "main" ]
     paths:
-      - 'terraform/**'
+      - 'infrastructure/**'
       - '.github/workflows/infra-provision.yml'
 
 env:
