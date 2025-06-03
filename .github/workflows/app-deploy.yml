@@ -31,6 +31,7 @@ jobs:
 
       - name: Build with Maven
         run: mvn -B clean package
+        working-directory: Application
 
   publish_job:
     name: Package and Upload JAR
@@ -47,11 +48,12 @@ jobs:
 
       - name: Run tests and verify build
         run: mvn --batch-mode verify
+        working-directory: Application
 
       - name: Copy JAR to staging
         run: |
           mkdir -p staging/target
-          cp target/${{ env.JAR_NAME }} staging/target/
+          cp Application/target/${{ env.JAR_NAME }} staging/target/
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
