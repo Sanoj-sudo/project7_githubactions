@@ -6,7 +6,7 @@ on:
     branches: [ "main" ]
     paths:
       - 'infrastructure/**'
-      - '.github/workflows/infra-provision.yml'
+      - '.github/workflows/terraform-infra.yml'
 
 env:
   AWS_REGION: ${{ vars.AWS_REGION }}
@@ -16,9 +16,6 @@ jobs:
     name: Provision EKS with Terraform
     runs-on: ubuntu-latest
     environment: prod
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     defaults:
       run:
@@ -28,20 +25,38 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform Init
+      - name: Initialize Terraform
         run: terraform init
 
-      - name: Terraform Format and Save Changes
-        run: terraform fmt -recursive
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive
 
       - name: Terraform Validate
         run: terraform validate
 
+      - name: Select Terraform Workspace (prod)
+        run: |
+          terraform workspace select prod || terraform workspace new prod
+
       - name: Terraform Plan
         run: terraform plan -out=tfplan
 
+      - name: Upload Terraform Plan Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan
+          path: infrastructure/tfplan
+
       - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve tfplan
