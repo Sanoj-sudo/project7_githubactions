@@ -158,3 +158,4 @@ jobs:
             --set image.repository=${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }} \
             --set image.tag=${IMAGE_TAG} \
             --set image.pullPolicy=Always
+
