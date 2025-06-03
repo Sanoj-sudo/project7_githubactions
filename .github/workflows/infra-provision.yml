@@ -6,7 +6,7 @@ on:
     branches: [ "main" ]
     paths:
       - 'infrastructure/**'
-      - '.github/workflows/terraform-infra.yml'
+      - '.github/workflows/tinfra-provision.yml'
 
 env:
   AWS_REGION: ${{ vars.AWS_REGION }}
