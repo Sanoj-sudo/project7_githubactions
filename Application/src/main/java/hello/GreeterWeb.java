@@ -12,6 +12,9 @@ public class GreeterWeb {
 
     public static void main(String[] args) {
         SpringApplication.run(GreeterWeb.class, args);
+
+        // Print Java version for debug
+        System.out.println("Running on Java version: " + System.getProperty("java.version"));
     }
 
     // Root route: HTML form
@@ -42,7 +45,7 @@ public class GreeterWeb {
     @ResponseBody
     public String greet(@RequestParam(defaultValue = "Guest") String name) {
         String safeName = HtmlUtils.htmlEscape(name);
-        return """
+        return String.format("""
                 <!DOCTYPE html>
                 <html>
                     <head>
@@ -54,6 +57,6 @@ public class GreeterWeb {
                         <a href="/">Back</a>
                     </body>
                 </html>
-               """.formatted(safeName);
+               """, safeName);
     }
 }
