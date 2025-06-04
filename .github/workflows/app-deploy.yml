@@ -12,7 +12,7 @@ on:
 env:
   JAR_NAME: greet-app-0.0.1-SNAPSHOT.jar
   ARTIFACT_NAME: greet-app-artifact
-  IMAGE_TAG: "2.0.0"
+  IMAGE_TAG: "3.0.0"
 
 jobs:
   build_and_package:
