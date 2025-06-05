@@ -53,7 +53,7 @@ public class GreeterWeb {
                         <title>Greeting</title>
                     </head>
                     <body>
-                        <h2>Hello %s, how may I help you?</h2>
+                        <h2>Hello %s, how may I help you Today?</h2>
                         <a href="/">Back</a>
                     </body>
                 </html>
